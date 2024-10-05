@@ -1,15 +1,24 @@
-import React, { Fragment } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import Header from './components/layouts/Header';
-import Footer from './components/layouts/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { routes } from './routes/redirect';
+import NotFound from './components/layouts/NotFound';
 
 function App() {
   return (
-    <Fragment>
-      <Header></Header>
-      <Footer></Footer>
-    </Fragment>
+    <div>
+      <Router>
+        <Routes>
+          {routes.map((route, index) => {
+            const Page = route.page;
+            return (
+              <Route key={index} path={route.path} element={<Page />} />
+            );
+          })}
+           <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

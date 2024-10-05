@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import Button from "../button/Button";
+import Logo from "../logo/Logo";
+import NavLinks from "../navigation/NavLinks";
+
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -6,13 +10,16 @@ const Header = () => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
+    const MenuItems = [
+        { name: 'Home', href: '#' },
+        { name: 'Properties', href: '#' },
+        { name: 'Agents', href: '#' },
+        { name: 'Blog', href: '#' },
+      ];
     return (
-        <header className="relative flex-wrap items-center content-center justify-between w-full p-10 animate-fade-down animate-delay-300 animate-once md:flex">
+        <header className="fixed top-0 right-0 z-10 flex-wrap justify-between w-full h-24 px-10 animate-fade-down animate-delay-300 animate-once md:flex">
             {/* Logo */}
-            <div className="w-16 h-16">
-                <img src="./hotel-sign.png" alt="Hotel Logo" />
-            </div>
+            <Logo className="flex items-center justify-center w-16 h-16 my-auto"></Logo>
 
             <div className="sm:ml-auto block md:hidden text-end mt-[-40px]">
                 <button onClick={toggleMenu} className="focus:outline-none">
@@ -32,32 +39,26 @@ const Header = () => {
                     </svg>
                 </button>
             </div>
-            <ul
-                className={`${
-                    isMenuOpen ? "block absolute z-10 right-10 " : "hidden"
-                }  md:flex items-center justify-between font-semibold text-cyan-600 uppercase text-end `}
-            >
-                <li className="mb-2 md:mx-10 md:mb-0">
-                    <a href="#">Home</a>
-                </li>
-                <li className="mb-2 md:mx-10 md:mb-0">
-                    <a href="#">Properties</a>
-                </li>
-                <li className="mb-2 md:mx-10 md:mb-0">
-                    <a href="#">Agents</a>
-                </li>
-                <li className="mb-2 md:mx-10 md:mb-0">
-                    <a href="#">Blog</a>
-                </li>
-                <li className="block md:hidden">
-                    <a href=""> Login</a>
-                </li>
-            </ul>
-
+            <ul className={`${
+                    isMenuOpen ? "block absolute z-10 right-10" : "hidden  text-xl "
+                } md:flex items-center justify-between font-bold text-cyan-600 uppercase text-end h-full`}>
+                {/* Dynamic Navigation Links */}
+                <NavLinks 
+                    navItems={MenuItems} 
+                    className="mb-2 md:mx-10 md:mb-0"
+                />
+                
+                {/* Mobile Login Link */}
+                {isMenuOpen && (
+                    <li className="block md:hidden">
+                    <a href="#" className="font-semibold uppercase text-cyan-600">
+                        Login
+                    </a>
+                    </li>
+                )}
+                </ul>
             {/* Login Button (hidden on small screens) */}
-            <button className="hidden pt-2 pb-2 pl-4 pr-4 font-semibold border-2 rounded md:block border-cyan-500 text-cyan-600 animate-bounce-slow ">
-                Login
-            </button>
+            <Button onClick={() => console.log('Button clicked') }>Login</Button>
         </header>
     );
 };
